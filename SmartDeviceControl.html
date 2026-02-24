@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BabaALD Smart Device Control</title>
+    <link rel="stylesheet" href="SmartDeviceControl.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js"></script>
+</head>
+<body>
+<div class="main-layout">
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-box">
+                <div class="logo-icon">B</div>
+                <h3>BabaALD IoT</h3>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="showSection('live-control',event)" class="active">Live Control</a></li>
+            <li><a href="#" onclick="showSection('add-device',event)">Add New Device</a></li>
+            <li><a href="#" onclick="showSection('manage-devices',event)">Manage Devices</a></li>
+            <li><a href="#" onclick="showSection('readme',event)">Quick Start Guide / Help</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button onclick="logout()" class="btn-logout" type="button">Logout</button>
+        </div>
+    </nav>
+
+    <main class="content-area">
+        <div class="top-bar">
+            <h2 id="user-greeting">Hi, Welcome back!</h2>
+        </div>
+
+        <section id="live-control-section" class="control-section">
+            <div class="section-header">
+                <h3>Live Smart Device Control</h3>
+                <p class="section-subtitle">Click on any device card to expand its full control</p>
+            </div>
+            <div id="dynamic-device-grid" class="device-grid"></div>
+        </section>
+
+        <section id="add-device-section" class="control-section hidden">
+            <div class="section-header"><h3>Add New Smart Device</h3></div>
+            <div class="form-card">
+                <label class="field-label" for="deviceTypeSelect">Device Type</label>
+                <select id="deviceTypeSelect" class="styled-select">
+                    <option value="" disabled selected>Choose a type</option>
+                    <option value="Smart Lamp">Smart Lamp</option>
+                    <option value="Smart Fan">Smart Fan</option>
+                    <option value="Smart Speaker">Smart Speaker</option>
+                    <option value="Smart Lamp with Alarm">Smart Lamp with Alarm</option>
+                    <option value="Smart Cooktop">Smart Cooktop</option>
+                    <option value="Smart Fridge">Smart Fridge</option>
+                    <option value="Smart Intrusion Detection">Smart Intrusion Detection</option>
+                </select>
+                <label class="field-label" for="newDeviceName">Device Name</label>
+                <input type="text" id="newDeviceName" class="styled-input" placeholder="e.g. Living Room Lamp" autocomplete="off">
+                <div id="attributeCheckboxes" class="checkbox-grid"></div>
+                <button id="sendAddOtpBtn" class="btn-green fancy-btn" type="button">Generate OTP</button>
+                <div id="addOtpSection" class="hidden">
+                    <label class="field-label">Enter 4-Digit OTP</label>
+                    <div class="otp-input-container" id="add-otp-inputs">
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+                    </div>
+                    <button id="verifyAddBtn" class="btn-green fancy-btn" type="button">Verify &amp; Save</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="manage-devices-section" class="control-section hidden">
+            <div class="section-header"><h3>Manage Devices</h3></div>
+            <div class="form-card">
+                <label class="field-label" for="manageDeviceSelect">Select Device</label>
+                <select id="manageDeviceSelect" class="styled-select">
+                    <option value="none" disabled selected>Choose Device</option>
+                </select>
+                <div id="manageAttributes" class="checkbox-grid"></div>
+                <div id="manageActions" style="display:none;">
+                    <div class="button-row">
+                        <button id="updateDeviceBtn" class="btn-navy fancy-btn" type="button">Update Settings</button>
+                        <button id="sendDeleteOtpBtn" class="btn-red fancy-btn" type="button">Delete Device</button>
+                    </div>
+                </div>
+                <div id="deleteOtpSection" class="hidden">
+                    <label class="field-label">Enter OTP to Delete</label>
+                    <div class="otp-input-container" id="delete-otp-inputs">
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box">
+                    </div>
+                    <button id="verifyDeleteBtn" class="btn-red fancy-btn" type="button">Confirm Deletion</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="readme-section" class="control-section hidden">
+            <div class="section-header"><h3>Quick Start Guide / Help</h3></div>
+            <div class="readme-card">
+                <h2>Welcome to BabaALD IoT Dashboard</h2>
+                <p>BabaALD is a real-time smart home control dashboard powered by Firebase. Control up to <strong>6 IoT devices</strong> from any browser. All changes sync instantly to your ESP32 devices.</p>
+                <h3>Adding a New Device</h3>
+                <ul>
+                    <li>Select device type, enter a unique name, choose attributes.</li>
+                    <li>Click <strong>Generate OTP</strong>, enter the OTP shown, click <strong>Verify &amp; Save</strong>.</li>
+                    <li>Maximum 6 devices allowed.</li>
+                </ul>
+                <h3>Live Control</h3>
+                <p>Each device card shows a Switch On/Off toggle. Click a card to expand its full controls. Expanded card moves left; others stack on the right.</p>
+                <h3>Managing Devices</h3>
+                <p>Go to <strong>Manage Devices</strong>, select a device, update its attributes, then click <strong>Update Settings</strong>. To delete, use <strong>Delete Device</strong> with OTP confirmation.</p>
+                <h3>Device Features</h3>
+                <h4>Smart Lamp</h4>
+                <p>RGB Colour Mixer with presets (Warm White, Scarlet Red, Light Blue, Baby Pink, Orange, Violet, Green), Lighting Patterns (Default / Random / Heartbeat / Groove / Psychedelics / Mutate / Rotate), Night Mode.</p>
+                <h4>Smart Fan</h4>
+                <p>Speed Control (1-5), Timer, Temperature-Based On/Off, Auto Schedule.</p>
+                <h4>Smart Speaker</h4>
+                <p>Volume Control, Internet Radio Mode, Timer.</p>
+                <h4>Smart Lamp with Alarm</h4>
+                <p>All Lamp features plus Volume, Timer, and Alarm setup.</p>
+                <h4>Smart Cooktop</h4>
+                <p>Power Level (1-10), Timer, Temp-Based On/Off (triggers once at food temp), Auto Schedule.</p>
+                <h4>Smart Fridge</h4>
+                <p>Switch On/Off, Timer, Auto Schedule.</p>
+                <h4>Smart Intrusion Detection</h4>
+                <p>Sensitivity (0-100, higher = more sensitive), Email Alert with address input, SMS Alert with phone number input.</p>
+                <h3>Tips</h3>
+                <ul>
+                    <li>Keep device names short and descriptive (no special characters).</li>
+                    <li>Hover over any control label to see a tooltip.</li>
+                    <li>RGB knobs update the colour preview circle in real time.</li>
+                </ul>
+                <div class="contact-box">
+                    <p><span class="tag">Help</span> For queries or setup assistance, contact:</p>
+                    <p>&#128231; ajit.nsit [at] gmail.com</p>
+                    <p>&#128172; WhatsApp: +91 94357 46193</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+function showSection(id, e) {
+    if (e) e.preventDefault();
+    document.querySelectorAll('.control-section').forEach(function(s){ s.classList.add('hidden'); });
+    var target = document.getElementById(id + '-section');
+    if (target) target.classList.remove('hidden');
+    document.querySelectorAll('.nav-links a').forEach(function(l){ l.classList.remove('active'); });
+    if (e && e.target) e.target.classList.add('active');
+}
+</script>
+<script type="module" src="SmartDeviceControl.js"></script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BabaALD's World</title>
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div id="loading-overlay">
+    <div class="spinner"></div>
+    <p>INITIALISING SYSTEMS...</p>
+</div>
+
+<!-- Ticker -->
+<div class="ticker-wrapper">
+    <span class="ticker-label">&#9889; INSIGHT FEED</span>
+    <div class="ticker-track" id="ticker-track">
+        <span class="ticker-item"><span class="quote-mark">"</span>Any sufficiently advanced technology is indistinguishable from magic.<span class="quote-mark">"</span>&nbsp;<span class="author">— Arthur C. Clarke</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>The best way to predict the future is to invent it.<span class="quote-mark">"</span>&nbsp;<span class="author">— Alan Kay</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>Science is not only a disciple of reason but also of romance and passion.<span class="quote-mark">"</span>&nbsp;<span class="author">— Stephen Hawking</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>The Internet of Things is not a concept; it is a network, the true technology-enabled Economy of Things.<span class="quote-mark">"</span>&nbsp;<span class="author">— Peter Sondergaard</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>Imagination is more important than knowledge.<span class="quote-mark">"</span>&nbsp;<span class="author">— Albert Einstein</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>If you're not failing every now and again, it's a sign you're not doing anything very innovative.<span class="quote-mark">"</span>&nbsp;<span class="author">— Woody Allen</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>The good news about computers is that they do what you tell them to do. The bad news is that they do what you tell them to do.<span class="quote-mark">"</span>&nbsp;<span class="author">— Ted Nelson</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>Robots will harvest, cook, and serve our food. They will work in our factories, drive our cars, and walk our dogs.<span class="quote-mark">"</span>&nbsp;<span class="author">— Gray Scott</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>The art challenges the technology, and the technology inspires the art.<span class="quote-mark">"</span>&nbsp;<span class="author">— John Lasseter</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>The only way to discover the limits of the possible is to go beyond them into the impossible.<span class="quote-mark">"</span>&nbsp;<span class="author">— Arthur C. Clarke</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>We are the first generation to feel the effect of climate change and the last generation that can do something about it — tech is our lever.<span class="quote-mark">"</span>&nbsp;<span class="author">— Barack Obama</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>Hardware eventually fails. Software eventually works.<span class="quote-mark">"</span>&nbsp;<span class="author">— Michael Hartung</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>Embedded systems are where software meets the real world — and the real world fights back.<span class="quote-mark">"</span>&nbsp;<span class="author">— Jack Ganssle</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>The future belongs to those who learn, unlearn, and relearn.<span class="quote-mark">"</span>&nbsp;<span class="author">— Alvin Toffler</span></span>
+        <!-- Duplicate for seamless loop -->
+        <span class="ticker-item"><span class="quote-mark">"</span>Any sufficiently advanced technology is indistinguishable from magic.<span class="quote-mark">"</span>&nbsp;<span class="author">— Arthur C. Clarke</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>The best way to predict the future is to invent it.<span class="quote-mark">"</span>&nbsp;<span class="author">— Alan Kay</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>Science is not only a disciple of reason but also of romance and passion.<span class="quote-mark">"</span>&nbsp;<span class="author">— Stephen Hawking</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>The Internet of Things is not a concept; it is a network, the true technology-enabled Economy of Things.<span class="quote-mark">"</span>&nbsp;<span class="author">— Peter Sondergaard</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>Imagination is more important than knowledge.<span class="quote-mark">"</span>&nbsp;<span class="author">— Albert Einstein</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>Hardware eventually fails. Software eventually works.<span class="quote-mark">"</span>&nbsp;<span class="author">— Michael Hartung</span></span>
+        <span class="ticker-item"><span class="quote-mark">"</span>Embedded systems are where software meets the real world — and the real world fights back.<span class="quote-mark">"</span>&nbsp;<span class="author">— Jack Ganssle</span></span>
+    </div>
+</div>
+
+<div class="main-container">
+    <header>
+        <h1>BabaALD's World</h1>
+        <p class="header-tagline">IoT &middot; Robotics &middot; Embedded Systems &middot; Home Automation</p>
+    </header>
+
+    <!-- Left Side Panel -->
+    <div class="side-panel left">
+        <div class="tech-card">
+            <div class="tech-card-icon">&#129302;</div>
+            <div class="tech-card-title">Robotics</div>
+            <p>Building machines that sense, think, and act — one servo at a time.</p>
+        </div>
+        <div class="tech-card">
+            <div class="tech-card-icon">&#127968;</div>
+            <div class="tech-card-title">Home Automation</div>
+            <p>Smart devices that learn your life and make your home intelligent.</p>
+        </div>
+        <div class="tech-card">
+            <div class="tech-card-icon">&#9881;</div>
+            <div class="tech-card-title">Embedded Systems</div>
+            <p>Firmware, microcontrollers and bare-metal code where every byte counts.</p>
+        </div>
+    </div>
+
+    <!-- Centre Form Column -->
+    <div class="form-column">
+
+        <!-- LOGIN -->
+        <div id="login-section" class="form-container active">
+            <h2>LOGIN</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="login-username">Email Address</label>
+                    <input type="text" id="login-username" required placeholder="Enter your email">
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <div class="pw-wrap">
+                        <input type="password" id="login-password" required placeholder="Enter password">
+                        <button type="button" class="eye-btn" id="login-eye" onclick="togglePw('login-password','login-eye')" tabindex="-1" title="Show/hide password">&#128065;</button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn">Login</button>
+                    <a href="#" class="text-link" onclick="toggleView('forgot-section')">Forgot / Reset Password?</a>
+                </div>
+            </form>
+            <p class="switch-prompt">New user? <a href="#" class="text-link" onclick="toggleView('signup-section')">Sign up here</a></p>
+        </div>
+
+        <!-- SIGNUP -->
+        <div id="signup-section" class="form-container hidden">
+            <h2>CREATE ACCOUNT</h2>
+            <form id="signup-form">
+                <div class="input-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" required placeholder="John Doe">
+                </div>
+                <div class="input-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" required placeholder="john@example.com">
+                </div>
+                <div class="input-group">
+                    <label for="signup-phone">Phone Number</label>
+                    <input type="tel" id="signup-phone" placeholder="+91 9876543210">
+                </div>
+                <div class="input-group">
+                    <label for="signup-password">Password</label>
+                    <div class="pw-wrap">
+                        <input type="password" id="signup-password" required placeholder="Create a strong password">
+                        <button type="button" class="eye-btn" id="signup-eye" onclick="togglePw('signup-password','signup-eye')" tabindex="-1">&#128065;</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="signup-confirm">Confirm Password</label>
+                    <div class="pw-wrap">
+                        <input type="password" id="signup-confirm" required placeholder="Re-enter password" oninput="checkPwMatch()">
+                        <button type="button" class="eye-btn" id="confirm-eye" onclick="togglePw('signup-confirm','confirm-eye')" tabindex="-1">&#128065;</button>
+                    </div>
+                    <div class="pw-match-msg" id="pw-match-msg"></div>
+                </div>
+                <!-- Conflict warning box -->
+                <div class="conflict-box" id="conflict-box">
+                    <p id="conflict-msg"></p>
+                    <div class="conflict-btns">
+                        <button type="button" class="btn-outline" onclick="toggleView('login-section');hideConflict()">Go to Login</button>
+                        <button type="button" class="btn-outline" onclick="toggleView('forgot-section');hideConflict()">Reset Password</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-full">Sign Up</button>
+            </form>
+            <p class="switch-prompt">Already have an account? <a href="#" class="text-link" onclick="toggleView('login-section')">Login</a></p>
+        </div>
+
+        <!-- FORGOT -->
+        <div id="forgot-section" class="form-container hidden">
+            <h2>RESET PASSWORD</h2>
+            <p class="instruction-text">Enter your registered email. We will send a reset link instantly.</p>
+            <form id="forgot-form">
+                <div class="input-group">
+                    <label for="forgot-email">Email Address</label>
+                    <input type="email" id="forgot-email" required placeholder="Enter registered email">
+                </div>
+                <button type="submit" class="btn btn-full">Send Reset Link</button>
+            </form>
+            <p class="switch-prompt">Remember your password? <a href="#" class="text-link" onclick="toggleView('login-section')">Back to Login</a></p>
+        </div>
+
+    </div>
+
+    <!-- Right Side Panel -->
+    <div class="side-panel right">
+        <div class="tech-card">
+            <div class="tech-card-icon">&#127760;</div>
+            <div class="tech-card-title">IoT</div>
+            <p>Connecting everyday objects to the internet — making them talk, respond and automate.</p>
+        </div>
+        <div class="tech-card">
+            <div class="tech-card-icon">&#128736;</div>
+            <div class="tech-card-title">Circuit Design</div>
+            <p>From schematic to PCB — crafting the silicon heartbeat of every smart device.</p>
+        </div>
+        <div class="tech-card">
+            <div class="tech-card-icon">&#128190;</div>
+            <div class="tech-card-title">3D Modelling</div>
+            <p>Designing enclosures, brackets and parts that bring digital creations into the physical world.</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="#" onclick="openModal('about-modal')">About Us</a>
+        <a href="#" onclick="openModal('contact-modal')">Contact Us</a>
+        <a href="#" onclick="openModal('privacy-modal')">Privacy Policy</a>
+        <a href="#" onclick="openModal('terms-modal')">Terms of Service</a>
+    </div>
+    <p>&copy; 2026 BabaALD's World. All rights reserved.</p>
+</footer>
+
+<!-- ABOUT MODAL -->
+<div class="modal-overlay" id="about-modal">
+<div class="modal-box">
+    <button class="modal-close" onclick="closeModal('about-modal')">&times;</button>
+    <h2>ABOUT US</h2>
+    <p>Welcome to <strong>BabaALD's World</strong> — a passion project born out of curiosity, late nights, and the sheer joy of making things work.</p>
+    <h3>Who We Are</h3>
+    <p>We are hobbyists. Not engineers by title, but engineers by heart. BabaALD's World is the digital home of a self-taught maker who woke up one day and decided that life is too short not to build stuff.</p>
+    <h3>What We Do</h3>
+    <p>We tinker. We prototype. We occasionally let the magic smoke out of components and learn from it. Our interests span a deliberately wide arc:</p>
+    <ul>
+        <li><strong>Microcontrollers &amp; Embedded Systems</strong> — ESP32, Arduino, STM32 and anything with registers to poke.</li>
+        <li><strong>IoT &amp; Home Automation</strong> — Making lights obey, fans think, and fridges gossip over Wi-Fi.</li>
+        <li><strong>Circuit Design</strong> — Schematic capture, PCB layout, and the satisfying moment a custom board boots for the first time.</li>
+        <li><strong>3D Modelling &amp; Printing</strong> — Designing enclosures and mechanical parts so the electronics have a body to live in.</li>
+        <li><strong>Web Development</strong> — Building the interfaces (like this one!) that let humans talk to machines.</li>
+        <li><strong>Databases &amp; Cloud</strong> — Firebase, real-time sync, and keeping things connected even when we're asleep.</li>
+    </ul>
+    <h3>Our Philosophy</h3>
+    <p>This is not a startup. There is no venture capital, no pivot strategy, no monetisation roadmap. This is a human being keeping the excitement alive — learning new things, breaking things, fixing things, and sharing the journey with anyone who finds it interesting.</p>
+    <p>If even one person reads something here and thinks <em>"I can build that too"</em> — we've done our job.</p>
+</div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contact-modal">
+<div class="modal-box">
+    <button class="modal-close" onclick="closeModal('contact-modal')">&times;</button>
+    <h2>CONTACT US</h2>
+    <p>We love hearing from fellow makers, curious minds, students, and anyone who stumbled here by accident and decided to stay. Reach out — we promise to respond.</p>
+    <h3>Find Us Online</h3>
+    <div class="contact-row"><span class="icon">&#128247;</span><span>Instagram: <a href="https://instagram.com/BabaALDsWorld" target="_blank">@BabaALDsWorld</a></span></div>
+    <div class="contact-row"><span class="icon">&#128100;</span><span>Facebook: <a href="https://facebook.com/BabaALDsWorld" target="_blank">BabaALD's World</a></span></div>
+    <div class="contact-row"><span class="icon">&#128140;</span><span>Twitter / X: <a href="https://twitter.com/BabaALDsWorld" target="_blank">@BabaALDsWorld</a></span></div>
+    <h3>Direct Contact</h3>
+    <div class="contact-row"><span class="icon">&#128172;</span><span>WhatsApp: <strong>+91 94357 46193</strong></span></div>
+    <div class="contact-row"><span class="icon">&#128231;</span><span>Email: <strong>ajit.nsit [at] gmail.com</strong></span></div>
+    <h3>Feedback</h3>
+    <p>Any feedback — positive, negative, brutally honest — is <strong>highly appreciated</strong>. This project grows because of input from people like you. Found a bug? Have a suggestion? Want to collaborate on a project? Drop us a line. We are all ears, all the time.</p>
+    <p>Response time is typically within 48 hours. We are hobbyists, not a help desk — but we do genuinely care.</p>
+</div>
+</div>
+
+<!-- PRIVACY MODAL -->
+<div class="modal-overlay" id="privacy-modal">
+<div class="modal-box">
+    <button class="modal-close" onclick="closeModal('privacy-modal')">&times;</button>
+    <h2>PRIVACY POLICY</h2>
+    <p><em>Last updated: February 2026</em></p>
+    <h3>Our Commitment</h3>
+    <p>BabaALD's World is a personal, non-commercial hobby project. The owner of this website does <strong>not</strong> collect, use, sell, share, or monetise any user data in any form whatsoever. We have no analytics dashboards, no advertising networks, and no interest in your data beyond what is strictly necessary for the website to function.</p>
+    <h3>What Data Is Stored</h3>
+    <p>When you create an account, your email address, display name, and optionally your phone number are stored solely to enable login functionality and device management within the application. This data is stored in Google's Firebase platform on our behalf.</p>
+    <h3>Firebase &amp; Google</h3>
+    <p>This website uses <strong>Google Firebase</strong> as its backend infrastructure for authentication and real-time database services. Firebase is operated by Google LLC and is subject to Google's own Privacy Policy and Terms of Service. We strongly encourage you to familiarise yourself with how Firebase / Google handles data:</p>
+    <ul>
+        <li><a href="https://firebase.google.com/support/privacy" target="_blank">Firebase Privacy and Security</a></li>
+        <li><a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a></li>
+    </ul>
+    <h3>Third-Party Sharing</h3>
+    <p>We do not share your data with any third party. Full stop. No exceptions.</p>
+    <h3>Your Rights</h3>
+    <p>You may request deletion of your account and associated data at any time by contacting us directly. We will action such requests promptly.</p>
+    <h3>Contact</h3>
+    <p>For any privacy-related queries, please contact us via the Contact page.</p>
+</div>
+</div>
+
+<!-- TERMS MODAL -->
+<div class="modal-overlay" id="terms-modal">
+<div class="modal-box">
+    <button class="modal-close" onclick="closeModal('terms-modal')">&times;</button>
+    <h2>TERMS OF SERVICE</h2>
+    <p><em>Last updated: February 2026</em></p>
+    <h3>Open Source Spirit</h3>
+    <p>BabaALD's World is built on the belief that knowledge should be shared freely. All information pertaining to any product, design, circuit, firmware, or code featured on this website is <strong>open source</strong> in spirit and available to anyone who asks.</p>
+    <h3>Obtaining Source Code &amp; Designs</h3>
+    <p>You may obtain any source code, schematics, 3D models, or design files by writing an email to the website owner (contact details on the Contact page). We will share everything we can.</p>
+    <p>Additionally, the complete source code for this website (built with significant assistance from Claude by Anthropic) will be published on <strong>GitHub</strong> shortly. The link will be provided here once available.</p>
+    <h3>Usage Licence</h3>
+    <p>All users are free to use, modify, and build upon any code or design published by BabaALD's World, subject to the following conditions:</p>
+    <ul>
+        <li><strong>Non-Commercial Use Only.</strong> No commercial use of any kind is permitted without explicit written permission from the owner.</li>
+        <li><strong>Attribution Required.</strong> Any reuse or redistribution must include appropriate credit to <strong>BabaALD's World</strong> and must provide a visible link back to this website.</li>
+        <li><strong>Share-Alike.</strong> If you modify and redistribute any work originating from BabaALD's World, you must make your modified version similarly available to others under these same terms.</li>
+    </ul>
+    <h3>Disclaimer</h3>
+    <p>All content is provided as-is, for educational and hobbyist purposes only. The owner accepts no liability for any damage, loss, or injury arising from the use of information, code, or designs published on this website. Always exercise appropriate care when working with electronics and mains voltages.</p>
+    <h3>Acceptance</h3>
+    <p>By using this website, you agree to these terms. If you do not agree, please discontinue use.</p>
+</div>
+</div>
+
+<script>
+function togglePw(inputId, btnId) {
+    var inp = document.getElementById(inputId);
+    var btn = document.getElementById(btnId);
+    if (inp.type === 'password') { inp.type = 'text'; btn.style.color = '#e8341a'; }
+    else                         { inp.type = 'password'; btn.style.color = '#999'; }
+}
+
+function checkPwMatch() {
+    var p1  = document.getElementById('signup-password').value;
+    var p2  = document.getElementById('signup-confirm').value;
+    var msg = document.getElementById('pw-match-msg');
+    if (!p2) { msg.className = 'pw-match-msg'; return; }
+    if (p1 === p2) { msg.textContent = '&#10003; Passwords match'; msg.className = 'pw-match-msg ok'; }
+    else           { msg.textContent = '&#10007; Passwords do not match'; msg.className = 'pw-match-msg err'; }
+}
+
+function hideConflict() {
+    document.getElementById('conflict-box').classList.remove('show');
+}
+
+function openModal(id)  { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) overlay.classList.remove('show');
+    });
+});
+</script>
+
+<!-- Animated Background Canvas -->
+<script>
+(function(){
+    var canvas = document.getElementById('bg-canvas');
+    var ctx    = canvas.getContext('2d');
+    var W, H;
+
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Nodes (circuit nodes)
+    var nodes = [];
+    var NODE_COUNT = 55;
+    for (var i = 0; i < NODE_COUNT; i++) {
+        nodes.push({
+            x: Math.random() * 1400,
+            y: Math.random() * 900,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            r: 1.5 + Math.random() * 2,
+            pulse: Math.random() * Math.PI * 2
+        });
+    }
+
+    // Data packets travelling along edges
+    var packets = [];
+    function spawnPacket(a, b) {
+        packets.push({ ax:a.x, ay:a.y, bx:b.x, by:b.y, t:0, speed: 0.008 + Math.random()*0.012 });
+    }
+
+    var frame = 0;
+
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        // Scale nodes to canvas size
+        var sx = W / 1400;
+        var sy = H / 900;
+
+        // Update nodes
+        nodes.forEach(function(n) {
+            n.x += n.vx; n.y += n.vy;
+            n.pulse += 0.03;
+            if (n.x < 0 || n.x > 1400) n.vx *= -1;
+            if (n.y < 0 || n.y > 900)  n.vy *= -1;
+        });
+
+        // Draw edges
+        for (var i = 0; i < nodes.length; i++) {
+            for (var j = i + 1; j < nodes.length; j++) {
+                var dx = (nodes[i].x - nodes[j].x) * sx;
+                var dy = (nodes[i].y - nodes[j].y) * sy;
+                var dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 140) {
+                    var alpha = (1 - dist/140) * 0.18;
+					if (alpha < 0.3)
+					{
+						alpha = alpha + 0.4;
+					}
+                    ctx.strokeStyle = 'rgba(232,52,26,' + alpha + ')';
+                    ctx.beginPath();
+                    ctx.lineWidth = 0.7;
+                    ctx.moveTo(nodes[i].x * sx, nodes[i].y * sy);
+                    ctx.lineTo(nodes[j].x * sx, nodes[j].y * sy);
+                    ctx.stroke();
+
+                    // Spawn packets occasionally
+                    if (frame % 90 === 0 && Math.random() < 0.04) {
+                        spawnPacket(nodes[i], nodes[j]);
+                    }
+                }
+            }
+        }
+
+        // Draw nodes
+        nodes.forEach(function(n) {
+            var pulse = 0.5 + 0.5 * Math.sin(n.pulse);
+            ctx.beginPath();
+            ctx.arc(n.x * sx, n.y * sy, n.r * (0.85 + 0.3 * pulse), 0, Math.PI*2);
+            ctx.fillStyle = 'rgba(232,52,26,' + (0.35 + 0.35 * pulse) + ')';
+            ctx.fill();
+        });
+
+        // Draw & update packets
+        packets = packets.filter(function(p) {
+            p.t += p.speed;
+            if (p.t > 1) return false;
+            var x = (p.ax + (p.bx - p.ax) * p.t) * sx;
+            var y = (p.ay + (p.by - p.ay) * p.t) * sy;
+            ctx.beginPath();
+            ctx.arc(x, y, 2.5, 0, Math.PI*2);
+            ctx.fillStyle = 'rgba(255,107,43,0.85)';
+            ctx.fill();
+            return true;
+        });
+
+        // Draw a subtle grid
+        ctx.strokeStyle = 'rgba(42,74,158,0.06)';
+        ctx.lineWidth = 1;
+        var gridSize = 60;
+        for (var gx = 0; gx < W; gx += gridSize) {
+            ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+        }
+        for (var gy = 0; gy < H; gy += gridSize) {
+            ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+        }
+
+        frame++;
+        requestAnimationFrame(draw);
+    }
+    draw();
+})();
+</script>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
