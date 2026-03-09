@@ -466,15 +466,25 @@ function initKnobs(safeId) {
         $('#preview-' + safeId).css('background', 'rgb(' + r + ',' + g + ',' + b + ')');
         $('#preset-'  + safeId).val('RGB Mix');
     }
-    $('.kr-' + safeId).knob({ fgColor:'#e74c3c', width:98, height:98, change:updateRGB });
-    $('.kg-' + safeId).knob({ fgColor:'#2ecc71', width:98, height:98, change:updateRGB });
-    $('.kb-' + safeId).knob({ fgColor:'#3498db', width:98, height:98, change:updateRGB });
+    // Common settings: 250° arc prevents wrap-around, displayInput centers value in knob
+    var knobCommon = {
+        angleOffset: -125,
+        angleArc: 250,
+        displayInput: true,
+        inputColor: '#1a2a6c',
+        font: 'Plus Jakarta Sans',
+        fontWeight: '700'
+    };
+    
+    $('.kr-' + safeId).knob(Object.assign({}, knobCommon, { fgColor:'#e74c3c', width:98, height:98, change:updateRGB }));
+    $('.kg-' + safeId).knob(Object.assign({}, knobCommon, { fgColor:'#2ecc71', width:98, height:98, change:updateRGB }));
+    $('.kb-' + safeId).knob(Object.assign({}, knobCommon, { fgColor:'#3498db', width:98, height:98, change:updateRGB }));
     // Brightness knob: visually distinct (bordered container + different knob styling), same horizontal level
-    $('.kbright-' + safeId).knob({ fgColor:'#f1c40f', bgColor:'#fff8e1', thickness:0.22, lineCap:'round', width:98, height:98, release:function(v){ var scaled = Math.round(v * 255 / 100); window.sf(safeId,'BRIGHTNESS', scaled); if (v > 60) showToast('TOO MUCH BRIGHTNESS CAUSES, MORE POWER CONSUMPTION, MORE HEAT & ALSO HARMFULL FOR EYES','error'); } });
-    $('.kspeed-' + safeId).knob({ fgColor:'#1a2a6c', width:90, release:function(v){ window.sf(safeId,'Speed',v); } });
-    $('.kvol-'   + safeId).knob({ fgColor:'#27ae60', width:90, release:function(v){ window.sf(safeId,'Volume',v); } });
-    $('.kpower-' + safeId).knob({ fgColor:'#f24e1e', width:90, release:function(v){ window.sf(safeId,'PowerLevel',v); } });
-    $('.ksense-' + safeId).knob({ fgColor:'#b21f1f', width:90, release:function(v){ window.sf(safeId,'Sensitivity',v); } });
+    $('.kbright-' + safeId).knob(Object.assign({}, knobCommon, { fgColor:'#f1c40f', bgColor:'#fff8e1', thickness:0.22, lineCap:'round', width:98, height:98, release:function(v){ var scaled = Math.round(v * 255 / 100); window.sf(safeId,'BRIGHTNESS', scaled); if (v > 60) showToast('TOO MUCH BRIGHTNESS CAUSES, MORE POWER CONSUMPTION, MORE HEAT & ALSO HARMFULL FOR EYES','error'); } }));
+    $('.kspeed-' + safeId).knob(Object.assign({}, knobCommon, { fgColor:'#1a2a6c', width:90, release:function(v){ window.sf(safeId,'Speed',v); } }));
+    $('.kvol-'   + safeId).knob(Object.assign({}, knobCommon, { fgColor:'#27ae60', width:90, release:function(v){ window.sf(safeId,'Volume',v); } }));
+    $('.kpower-' + safeId).knob(Object.assign({}, knobCommon, { fgColor:'#f24e1e', width:90, release:function(v){ window.sf(safeId,'PowerLevel',v); } }));
+    $('.ksense-' + safeId).knob(Object.assign({}, knobCommon, { fgColor:'#b21f1f', width:90, release:function(v){ window.sf(safeId,'Sensitivity',v); } }));
 }
 
 // ── DB helpers (all use safeId — no device name in inline HTML) ──
@@ -623,6 +633,10 @@ if (verifyAddBtn) {
         document.getElementById('attributeCheckboxes').innerHTML = '';
         var sec = document.getElementById('addOtpSection'); if (sec) sec.classList.add('hidden');
         clearOTPFields('add-otp-inputs');
+        // Activate Live Control nav link
+        document.querySelectorAll('.nav-links a').forEach(function(a){ a.classList.remove('active'); });
+        var liveLink = document.querySelector('.nav-links a[onclick*="live-control"]');
+        if (liveLink) liveLink.classList.add('active');
         window.showSection('live-control', null);
     });
 }
@@ -633,10 +647,25 @@ if (manSel) {
     manSel.addEventListener('change', function() {
         var name    = this.value;
         var actions = document.getElementById('manageActions');
+        var typeDiv = document.getElementById('manageDeviceType');
+        var typeSel = document.getElementById('manageTypeSelect');
         var attrsEl = document.getElementById('manageAttributes');
-        if (!name || name==='none') { if (actions) actions.style.display='none'; return; }
+        
+        if (!name || name==='none') { 
+            if (actions) actions.style.display='none';
+            if (typeDiv) typeDiv.style.display='none';
+            return; 
+        }
+        
         if (actions) actions.style.display='block';
+        if (typeDiv) typeDiv.style.display='block';
+        
         var dev = currentDevices[name];
+        
+        // Set device type dropdown
+        if (typeSel) typeSel.value = dev.type;
+        
+        // Populate attributes for current type
         attrsEl.innerHTML = '';
         (deviceMaster[dev.type] || []).forEach(function(attr) {
             var checked = (dev.attributes && dev.attributes[attr]) ? 'checked' : '';
@@ -647,14 +676,38 @@ if (manSel) {
     });
 }
 
+// Handle device type change in manage section
+var manTypeSel = document.getElementById('manageTypeSelect');
+if (manTypeSel) {
+    manTypeSel.addEventListener('change', function() {
+        var newType = this.value;
+        var attrsEl = document.getElementById('manageAttributes');
+        
+        // Clear and repopulate attributes for new type (all checked by default)
+        attrsEl.innerHTML = '';
+        (deviceMaster[newType] || []).forEach(function(attr) {
+            var lbl = document.createElement('label');
+            lbl.innerHTML = '<input type="checkbox" class="m-attr" value="' + attr + '" checked> ' + attr;
+            attrsEl.appendChild(lbl);
+        });
+    });
+}
+
 var updateBtn = document.getElementById('updateDeviceBtn');
 if (updateBtn) {
     updateBtn.addEventListener('click', async function() {
         var name = document.getElementById('manageDeviceSelect').value;
         if (!name || name==='none') return;
+        
+        var newType = document.getElementById('manageTypeSelect').value;
         var attrs = {};
         document.querySelectorAll('.m-attr:checked').forEach(function(cb){ attrs[cb.value]=true; });
-        await update(ref(db, 'users/' + auth.currentUser.uid + '/devices/' + name), { attributes:attrs });
+        
+        // Save both type and attributes
+        await update(ref(db, 'users/' + auth.currentUser.uid + '/devices/' + name), { 
+            type: newType,
+            attributes: attrs 
+        });
         showToast('Device updated!','success');
     });
 }

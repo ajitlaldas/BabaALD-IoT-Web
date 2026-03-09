@@ -13,6 +13,7 @@
     --text-muted:  #8ea0c8;
     --card-bg:     rgba(255,255,255,0.97);
     --border:      rgba(232,52,26,0.2);
+    --ticker-duration: 60s;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -270,7 +271,7 @@ header h1 {
     display: flex; align-items: center;
     padding-left: 140px;
     white-space: nowrap;
-    animation: tickerScroll 60s linear infinite;
+    animation: tickerScroll 40s linear infinite;
 }
 .ticker-track:hover { animation-play-state: paused; }
 .ticker-item {
@@ -352,9 +353,17 @@ footer p { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
     .main-container { grid-template-columns: 1fr; grid-template-rows: auto auto; }
     .form-column    { grid-column: 1; }
     .side-panel     { display: none; }
+    /* make ticker use less left padding on narrower screens */
+    .ticker-track { padding-left: 110px; }
+    /* Speed up ticker on tablets - 20 seconds */
+    .ticker-track { animation-duration: 20s !important; }
 }
 @media (max-width: 480px) {
     .main-container { padding: 1rem; }
     .form-container { padding: 1.8rem 1.3rem; }
     header h1 { font-size: 1.6rem; }
+    .ticker-track { padding-left: 90px; }
+    .ticker-item { margin-right: 40px; font-size: 0.78rem; }
+    /* Speed up ticker significantly on phones - 12 seconds */
+    .ticker-track { animation-duration: 12s !important; }
 }

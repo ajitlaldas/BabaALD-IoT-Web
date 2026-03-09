@@ -427,5 +427,26 @@ document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
 </script>
 
 <script type="module" src="script.js"></script>
+<script>
+// Adjust ticker speed based on content pixel distance and viewport — faster on mobile
+;(function(){
+    var timer = null;
+    function adjustTicker(){
+        var track = document.querySelector('.ticker-track');
+        if (!track) return;
+        // The CSS animation translates by -50% (see keyframes), so compute half the scrollWidth as pixel distance
+        var distance = track.scrollWidth * 0.5;
+        if (!distance || distance <= 0) return;
+        // Choose target pixels-per-second based on device size (higher on mobile to feel snappier)
+        var pps = window.innerWidth <= 480 ? 220 : (window.innerWidth <= 900 ? 140 : 100);
+        var duration = Math.max(4, Math.round(distance / pps));
+        document.documentElement.style.setProperty('--ticker-duration', duration + 's');
+    }
+    window.addEventListener('resize', function(){ clearTimeout(timer); timer = setTimeout(adjustTicker, 120); });
+    window.addEventListener('load', adjustTicker);
+    // fallback check after initial render
+    setTimeout(adjustTicker, 400);
+})();
+</script>
 </body>
 </html>

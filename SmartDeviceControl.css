@@ -281,7 +281,7 @@ body {
 .ctrl-col { flex:1; min-width:0; padding:0 14px; }
 .ctrl-col:first-child { padding-left:0; }
 .ctrl-col:last-child  { padding-right:0; }
-.ctrl-col-colour { flex:0 0 auto; width:240px; padding-left:0; padding-right:14px; }
+.ctrl-col-colour { flex:0 0 auto; width:320px; padding-left:0; padding-right:16px; }
 .ctrl-col-right  { flex:1; display:flex; align-items:flex-start; gap:0; min-width:0; }
 .ctrl-col-sm { flex:1; min-width:0; padding:0 10px; }
 .ctrl-col-sm:first-child { padding-left:0; }
@@ -339,9 +339,106 @@ body {
     .content-area { padding:22px 18px; }
 }
 @media(max-width:640px) {
-    .main-layout { flex-direction:column; }
-    .sidebar { width:100%; min-width:unset; height:auto; }
+    .main-layout { flex-direction:column; height:auto; }
+    .sidebar { 
+        width:100%; min-width:unset; height:auto;
+        padding:12px 14px;
+        position:relative;
+    }
+    /* Make nav links horizontal row with logout button */
+    .nav-links { 
+        display:flex; 
+        flex-direction:row; 
+        flex-wrap:wrap; 
+        gap:6px;
+        margin-bottom:12px;
+    }
+    .nav-links li { flex:0 1 auto; }
+    .nav-links li a { 
+        padding:8px 12px; 
+        font-size:0.82rem; 
+        white-space:nowrap; 
+    }
+    .sidebar-footer { 
+        border-top:none; 
+        padding-top:0; 
+        margin-top:0; 
+    }
     body,.main-layout { height:auto; overflow:auto; }
     .content-area { overflow:visible; }
     .checkbox-grid { grid-template-columns:1fr; }
+}
+
+/* Additional mobile refinements */
+@media (max-width:480px) {
+    /* Ensure device grid and cards fit */
+    .device-grid { grid-template-columns: 1fr !important; gap:12px; }
+    .device-card { margin:0; }
+
+    /* Make multi-column control layouts stack vertically - CRITICAL */
+    .ctrl-layout-2col, 
+    .ctrl-layout-colour-split { 
+        display:block !important; 
+        flex-direction:column !important; 
+    }
+    .ctrl-col-colour { 
+        width:100% !important; 
+        padding:0 !important; 
+        margin-bottom:16px; 
+    }
+    .ctrl-col-right { 
+        display:block !important; 
+        width:100% !important; 
+    }
+    .ctrl-col, .ctrl-col-sm { 
+        width:100% !important; 
+        padding:0 !important; 
+        margin-bottom:10px;
+    }
+    .ctrl-vdivider { display:none !important; }
+
+    /* Keep RGB knobs in one horizontal row and shrink knob visuals */
+    .rgb-knob-row { gap:8px; justify-content:flex-start; }
+    .knob-col { transform:scale(0.78); transform-origin:center bottom; }
+    .rgb-preview-circle { width:48px; height:48px; }
+
+    /* Brightness box adjustments */
+    .brightness-col { padding:4px; }
+
+    /* Buttons and inline actions should wrap and be full-width */
+    .button-row { flex-direction:column; }
+    .fancy-btn { width:100%; justify-content:center; }
+    
+    /* Make sure all input rows and controls fit */
+    .input-row { 
+        flex-direction:column !important; 
+        gap:6px !important; 
+        width:100%;
+    }
+    .input-row input,
+    .input-row button,
+    .card-input,
+    .inline-save-btn { 
+        width:100% !important; 
+        box-sizing:border-box;
+    }
+    
+    /* Ensure toggles and labels don't overflow */
+    .attr-row-toggle { 
+        flex-wrap:wrap; 
+        gap:8px; 
+    }
+    .attr-section { 
+        padding:12px 0 8px; 
+        width:100%;
+        overflow:hidden;
+    }
+
+    /* Smaller OTP boxes */
+    .otp-box { width:44px; height:50px; font-size:1.4rem; }
+
+    /* Reduce paddings so controls don't go off-screen */
+    .content-area { padding:14px 10px; }
+    .form-card { padding:16px; }
+    .card-expanded-body { padding:0 16px 18px; }
 }
