@@ -1,7 +1,7 @@
 # BabaALD-IoT-Web
-Attempting to make a WebAapp and developing firmware (for ESP32/ESP8266) for Smart Home Devices
+Attempting to make a WebAapp and developing firmware (for ESP32/ESP8266) for Smart Home Devices.
 ESP32 Firmware code for a "SmartLamp + Buzzer/Speaker" is also added in a separate folder.
-Link for the WebApp (Published through Firebase)
+Link for the WebApp (Published through Firebase): 
 https://esp32-babaald.web.app/index.html
 
 Following fixes done in Revision: 1 of this web files:
