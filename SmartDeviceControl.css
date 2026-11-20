@@ -140,10 +140,10 @@ body {
 
 /* ── Device Grid ───────────────────────────────────────────── */
 .device-grid {
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));
     gap:22px; align-items:start;
 }
-.device-grid.has-expanded { grid-template-columns:1fr 320px; }
+.device-grid.has-expanded { grid-template-columns:1fr; }
 
 .device-card {
     background:var(--card); border-radius:var(--r-xl);
@@ -152,8 +152,6 @@ body {
 }
 .device-card.condensed { cursor:pointer; border-top:4px solid var(--orange); }
 .device-card.expanded  { border-top:5px solid var(--orange); }
-.device-card.expanded  { grid-column:1; grid-row:1 / span 99; }
-.device-card.card-right-stack { grid-column:2; }
 
 /* ── Card Header ───────────────────────────────────────────── */
 .card-header {
@@ -260,9 +258,9 @@ body {
 .styled-select-card:focus { outline:none; border-color:var(--orange); box-shadow:0 0 0 3px var(--orange-glow); background:white; }
 
 /* ── Card inputs ───────────────────────────────────────────── */
-.input-row { display:flex; gap:8px; align-items:center; }
+.input-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
 .card-input {
-    flex:1; padding:9px 12px; border:1.5px solid var(--border); border-radius:var(--r-sm);
+    flex:1; min-width:0; padding:9px 12px; border:1.5px solid var(--border); border-radius:var(--r-sm);
     font-family:inherit; font-size:0.9rem; color:var(--text); background:#f9fafd; transition:var(--t);
     box-shadow:inset 0 1px 3px rgba(26,42,108,0.04);
 }
@@ -282,10 +280,13 @@ body {
 .ctrl-col:first-child { padding-left:0; }
 .ctrl-col:last-child  { padding-right:0; }
 .ctrl-col-colour { flex:0 0 auto; width:320px; padding-left:0; padding-right:16px; }
-.ctrl-col-right  { flex:1; display:flex; align-items:flex-start; gap:0; min-width:0; }
+.ctrl-col-right  { flex:1; display:block; min-width:0; }
 .ctrl-col-sm { flex:1; min-width:0; padding:0 10px; }
 .ctrl-col-sm:first-child { padding-left:0; }
 .ctrl-col-sm:last-child  { padding-right:0; }
+.ctrl-col-right > .ctrl-col-sm { width:100%; padding:0; }
+.ctrl-col-right > .ctrl-col-sm + .ctrl-col-sm { margin-top:12px; }
+.ctrl-col-right > .ctrl-vdivider { display:none; }
 .ctrl-vdivider {
     width:2px; align-self:stretch; border-radius:2px; flex-shrink:0; margin:0 6px;
     background:linear-gradient(to bottom, transparent 0%, var(--orange) 15%, #8899cc 85%, transparent 100%);
@@ -331,10 +332,38 @@ body {
 #manageActions { margin-top:16px; }
 
 /* ── Responsive ────────────────────────────────────────────── */
+/* Wide screens: expanded card on the left, other cards stacked on the right */
+@media (min-width:1360px) {
+    .device-grid.has-expanded { grid-template-columns:minmax(0,1fr) 320px; }
+    .device-card.expanded { grid-column:1; grid-row:1 / span 99; }
+    .device-card.card-right-stack { grid-column:2; }
+}
+
+/* Very wide screens: split the right-side controls into two columns again */
+@media (min-width:1600px) {
+    .ctrl-col-right { display:flex; align-items:flex-start; gap:0; }
+    .ctrl-col-right > .ctrl-col-sm { flex:1; width:auto; padding:0 10px; margin-top:0; }
+    .ctrl-col-right > .ctrl-col-sm:first-child { padding-left:0; }
+    .ctrl-col-right > .ctrl-col-sm:last-child { padding-right:0; }
+    .ctrl-col-right > .ctrl-vdivider { display:block; }
+}
+
+/* Tablets and small laptops: stack multi-column control layouts */
+@media (max-width:1100px) {
+    .ctrl-layout-2col,
+    .ctrl-layout-colour-split { display:block; }
+    .ctrl-col,
+    .ctrl-col-sm,
+    .ctrl-col-colour,
+    .ctrl-col-right { width:100%; padding:0; margin-bottom:10px; }
+    .ctrl-col-colour { margin-bottom:16px; }
+    .ctrl-col-right { display:block; }
+    .ctrl-vdivider { display:none; }
+    .input-row { flex-wrap:wrap; }
+    .readme-card { padding:24px; }
+}
+
 @media(max-width:960px) {
-    .device-grid.has-expanded { grid-template-columns:1fr; }
-    .device-card.expanded     { grid-column:auto; grid-row:auto; }
-    .device-card.card-right-stack { grid-column:auto; }
     .sidebar { width:220px; min-width:220px; padding:20px 14px; }
     .content-area { padding:22px 18px; }
 }
@@ -375,30 +404,9 @@ body {
     .device-grid { grid-template-columns: 1fr !important; gap:12px; }
     .device-card { margin:0; }
 
-    /* Make multi-column control layouts stack vertically - CRITICAL */
-    .ctrl-layout-2col, 
-    .ctrl-layout-colour-split { 
-        display:block !important; 
-        flex-direction:column !important; 
-    }
-    .ctrl-col-colour { 
-        width:100% !important; 
-        padding:0 !important; 
-        margin-bottom:16px; 
-    }
-    .ctrl-col-right { 
-        display:block !important; 
-        width:100% !important; 
-    }
-    .ctrl-col, .ctrl-col-sm { 
-        width:100% !important; 
-        padding:0 !important; 
-        margin-bottom:10px;
-    }
-    .ctrl-vdivider { display:none !important; }
-
     /* Keep RGB knobs in one horizontal row and shrink knob visuals */
     .rgb-knob-row { gap:8px; justify-content:flex-start; }
+    .rgb-vertical-divider { display:none; }
     .knob-col { transform:scale(0.78); transform-origin:center bottom; }
     .rgb-preview-circle { width:48px; height:48px; }
 

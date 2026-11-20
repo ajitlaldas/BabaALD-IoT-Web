@@ -13,6 +13,7 @@ Following fixes done in Revision: 1 of this web files:
 5) Live control overlapping rendering on mobile screen is fixed. Now vertical staxking is made mandatory dor smaller screen widths
 6) On manage device page you can change the device type also.
 
-Issues to address:
-1) On iPad or tablet screen the rendering is still not proper
-2) On the home page ticker (Insight feed) only initial 2 -3 quotes are appearing and then it refreshes
+Issues addressed in Revision: 2:
+
+1) iPad / tablet rendering fixed. The expanded device card now uses the full content width below 1360px, multi-column control layouts stack below 1100px, and the login form is width-capped on tablets.
+2) Home page ticker (Insight feed) now loops seamlessly. The full quote list is duplicated exactly and the animation distance is calculated from one group's width instead of half the track width.
