@@ -255,7 +255,9 @@ header h1 {
     background: rgba(13,27,62,0.85);
     border-top: 1px solid rgba(232,52,26,0.3);
     border-bottom: 1px solid rgba(232,52,26,0.3);
-    padding: 10px 0; overflow: hidden;
+    padding: 10px 0;
+    padding-left: var(--ticker-offset, 140px);
+    overflow: hidden;
     backdrop-filter: blur(6px);
 }
 .ticker-label {
@@ -269,11 +271,12 @@ header h1 {
 }
 .ticker-track {
     display: flex; align-items: center;
-    padding-left: 140px;
+    width: max-content;
     white-space: nowrap;
-    animation: tickerScroll 40s linear infinite;
+    animation: tickerScroll var(--ticker-duration, 60s) linear infinite;
 }
 .ticker-track:hover { animation-play-state: paused; }
+.ticker-group { display: flex; align-items: center; flex: none; }
 .ticker-item {
     display: inline-flex; align-items: center;
     font-size: 0.82rem; color: var(--off-white);
@@ -284,6 +287,9 @@ header h1 {
 @keyframes tickerScroll {
     0%   { transform: translateX(0); }
     100% { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ticker-track { animation: none; }
 }
 
 /* ── Footer ──────────────────────────────────────────────── */
@@ -351,19 +357,13 @@ footer p { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 900px) {
     .main-container { grid-template-columns: 1fr; grid-template-rows: auto auto; }
-    .form-column    { grid-column: 1; }
+    .form-column    { grid-column: 1; max-width: 460px; width: 100%; margin: 0 auto; }
     .side-panel     { display: none; }
-    /* make ticker use less left padding on narrower screens */
-    .ticker-track { padding-left: 110px; }
-    /* Speed up ticker on tablets - 20 seconds */
-    .ticker-track { animation-duration: 20s !important; }
 }
 @media (max-width: 480px) {
     .main-container { padding: 1rem; }
     .form-container { padding: 1.8rem 1.3rem; }
     header h1 { font-size: 1.6rem; }
-    .ticker-track { padding-left: 90px; }
+    .ticker-label { padding: 0 12px; font-size: 0.58rem; letter-spacing: 1.2px; }
     .ticker-item { margin-right: 40px; font-size: 0.78rem; }
-    /* Speed up ticker significantly on phones - 12 seconds */
-    .ticker-track { animation-duration: 12s !important; }
 }
